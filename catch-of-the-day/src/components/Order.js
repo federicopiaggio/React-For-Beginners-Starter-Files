@@ -5,7 +5,10 @@ class Order extends Component {
   renderOrder = (key) => {
     const fish = this.props.fishes[key];
     const count = this.props.order[key];
+    //aca preguntamos si hay fish para que no de error cuando queramos cargar del localstorage
     const isAvailable = fish && fish.status === "available";
+    //evitar el glitch cuando carga de localstorage los fish que tengamos
+    if (!fish) return null;
     if (!isAvailable) {
       return (
         <li key={key}>

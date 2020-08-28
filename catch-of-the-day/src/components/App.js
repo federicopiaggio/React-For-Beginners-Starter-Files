@@ -4,11 +4,44 @@ import Order from "./Order";
 import Inventory from "./Inventory";
 import sampleFishes from "../sample-fishes";
 import Fish from "./Fish";
+import base from "../base";
+
 export default class App extends Component {
   state = {
     fishes: {},
     order: {},
   };
+
+  componentDidMount() {
+    //primero reanudamos state del localhost en
+    const localStorageRef = localStorage.getItem(
+      this.props.match.params.storeId
+    );
+    //chequeamos que haya algo en la referencia al localhost y lo cargamos al order como jsonobject parseado ya que esta como string
+    if (localStorageRef) {
+      this.setState({ order: JSON.parse(localStorageRef) });
+    }
+
+    //cuando se monta el componente, agrega los pescados a la base de firebase del state fishes
+    this.ref = base.syncState(`${this.props.match.params.storeId}/fishes`, {
+      context: this,
+      state: "fishes",
+    });
+  }
+
+  componentDidUpdate() {
+    //guardando en el localstorage las ordenes que vamos haciendo, el state order devuelve un objeto, el cual hay que convertirlo a json para poder leerlo
+    localStorage.setItem(
+      this.props.match.params.storeId,
+      JSON.stringify(this.state.order)
+    );
+    console.log("updated");
+  }
+
+  componentWillUnmount() {
+    //cuando se desmonta suelta la ref de firebase
+    base.removeBinding(this.ref);
+  }
 
   addFish = (fish) => {
     //copia del objeto fishes
@@ -20,6 +53,7 @@ export default class App extends Component {
   };
 
   loadSampleFishes = () => {
+    //carga la lista de pescados de muestra
     this.setState({ fishes: sampleFishes });
   };
 
@@ -34,6 +68,7 @@ export default class App extends Component {
 
   render() {
     const storeName = this.props.match.params.storeId;
+
     return (
       <div className="catch-of-the-day">
         <div className="menu">
