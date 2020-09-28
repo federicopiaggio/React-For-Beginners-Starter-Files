@@ -52,6 +52,28 @@ export default class App extends Component {
     this.setState({ fishes: fishes });
   };
 
+  //recibe la key del fish que se va editar y una callback que trae de editfishform
+  updateFish = (key, updatedFish) => {
+    //copiar el fishes del state
+    const fishes = { ...this.state.fishes };
+    //actualizar el state
+    fishes[key] = updatedFish;
+    //setear al state
+
+    this.setState({ fishes });
+  };
+
+  deleteFish = (key) => {
+    // hacer copia de state
+    const fishes = { ...this.state.fishes };
+
+    //actualizar el estado a null para que en firebase tambien lo borre
+    fishes[key] = null;
+
+    // setear el state
+    this.setState({ fishes });
+  };
+
   loadSampleFishes = () => {
     //carga la lista de pescados de muestra
     this.setState({ fishes: sampleFishes });
@@ -62,6 +84,15 @@ export default class App extends Component {
     const order = { ...this.state.order };
     //agregar a la orden
     order[key] = order[key] + 1 || 1;
+
+    this.setState({ order });
+  };
+
+  removeFromOrder = (key) => {
+    //copia del objeto order
+    const order = { ...this.state.order };
+    //remover de la orden
+    delete order[key];
 
     this.setState({ order });
   };
@@ -85,10 +116,17 @@ export default class App extends Component {
             ))}
           </ul>
         </div>
-        <Order fishes={this.state.fishes} order={this.state.order} />
+        <Order
+          fishes={this.state.fishes}
+          order={this.state.order}
+          removeFromOrder={this.removeFromOrder}
+        />
         <Inventory
           addFish={this.addFish}
           loadSampleFishes={this.loadSampleFishes}
+          fishes={this.state.fishes}
+          updateFish={this.updateFish}
+          deleteFish={this.deleteFish}
         />
       </div>
     );
