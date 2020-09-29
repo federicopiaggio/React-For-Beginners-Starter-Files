@@ -1,14 +1,50 @@
 .order-enter {
-  background: #f00;
   -webkit-transform: translateX(-120%);
           transform: translateX(-120%);
-  -webkit-transition: 5s;
-  transition: 5s;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  max-height: 0;
+  padding: 0 !important;
 }
 .order-enter.order-enter-active {
-  background: #ff0;
   -webkit-transform: translateX(0);
           transform: translateX(0);
+  max-height: 60px;
+  padding: 2rem 0 !important;
+}
+.order-exit {
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+.order-exit.order-exit-active {
+  -webkit-transform: translateX(120%);
+          transform: translateX(120%);
+  padding: 0;
+}
+.count-enter {
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+.count-enter.count-enter-active {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+.count-exit {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+.count-exit.count-exit-active {
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
 }
 @font-face {
   font-family: "haymakerregular";

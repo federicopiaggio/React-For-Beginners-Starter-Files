@@ -6,9 +6,35 @@
 */
 
 .order-enter
-  background red
   transform:  translateX(-120%)
-  transition 5s
+  transition 0.5s
+  max-height: 0
+  padding 0 !important
   &.order-enter-active
-    background yellow
     transform: translateX(0)
+    max-height: 60px
+    padding 2rem 0 !important
+.order-exit
+  transform: translateX(0)
+  transition 0.5s
+  &.order-exit-active
+    transform:  translateX(120%)
+    padding 0
+
+.count-enter
+  transform: translateY(100%)
+  transition 0.5s
+  &.count-enter-active
+    transform: translateY(0)
+
+
+.count-exit
+  transform: translateY(0)
+  transition 0.5s
+  position absolute
+  left 0
+  bottom 0
+  &.count-exit-active
+    transform: translateY(-100%)
+
+
